@@ -19,7 +19,7 @@ export const addUser = async (user: User): Promise<any> => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const [result] = await pool.query(
             'INSERT INTO usuarios (nombre, apellido, password) VALUES (?, ?, ?)',
-            [nombre, apellido, 1234]
+            [nombre, apellido, hashedPassword]
         );
         return result;
     } catch (error) {
