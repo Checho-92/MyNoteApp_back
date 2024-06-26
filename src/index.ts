@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes';
+import noteRoutes from './routes/noteRoutes'; // Asegúrate de importar las rutas de notas
 import { pool } from './database';
 import morgan from 'morgan';
 
@@ -11,7 +12,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/api/user', userRoutes);
-
+app.use('/api/notes', noteRoutes); // Asegúrate de agregar las rutas de notas
 const checkDatabaseConnection = async () => {
     try {
         await pool.query('SELECT 1');
