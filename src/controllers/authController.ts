@@ -7,25 +7,26 @@ import { RowDataPacket } from 'mysql2';
 // Función asíncrona para manejar el inicio de sesión
 const login = async (req: Request, res: Response): Promise<void> => {
   const { nombre, password } = req.body;
- console.log(req.body)
+ console.log(req.body) 
+ let firstName = nombre
   try {
     const [results] = await pool.query<RowDataPacket[]>(
       'SELECT * FROM usuarios WHERE nombre = ?',
-      [nombre]
+      [firstName]
     );
-
+      console.log(results)
     if (results.length === 0) {
       res.status(401).json({ message: 'Credenciales incorrectas' });
       return;
     }
     console.log('hola')
     const user = results[0];
-    // const isPasswordValid = await bcrypt.compare(password, user.password);
+     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    // if (!isPasswordValid) {
-    //   res.status(401).json({ message: 'Credenciales incorrectas' });
-    //   return;
-    // }
+     if (!isPasswordValid) {
+       res.status(401).json({ message: 'Credenciales incorrectas' });
+       return;
+    }
 
     const token = jwt.sign({ userId: user.id_usuario }, 'your_secret_key', { expiresIn: '1h' });
 
