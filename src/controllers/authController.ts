@@ -1,3 +1,5 @@
+//AuthController.ts
+
 import { Request, Response } from 'express';
 import AuthService from '../applications/services/AuthService';
 

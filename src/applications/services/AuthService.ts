@@ -1,3 +1,5 @@
+//AuthService.ts
+
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import UserRepository from '../../adapters/repositories/UserRepository';
@@ -25,22 +27,6 @@ class AuthService {
         const token = jwt.sign({ userId: user.id_usuario }, 'your_secret_key', { expiresIn: '1h' });
         // Retorna el token y la información del usuario
         return { token, user: { id: user.id_usuario, nombre: user.nombre } };
-    }
-
-    // Método para manejar el registro de un nuevo usuario
-    async register({ firstName, lastName, password }: { firstName: string, lastName: string, password: string }): Promise<any> {
-        // Verifica si el usuario ya está registrado
-        const existingUser = await UserRepository.getUserByName(firstName);
-        if (existingUser) {
-            throw new Error('Usuario ya registrado');
-        }
-
-        // Hashea la contraseña proporcionada
-        const hashedPassword = await bcrypt.hash(password, 10);
-        // Agrega el nuevo usuario a la base de datos
-        const user = await UserRepository.addUser({ nombre: firstName, apellido: lastName, password: hashedPassword });
-        // Retorna la información del usuario y un mensaje de confirmación
-        return { user, message: 'Usuario registrado correctamente' };
     }
 }
 

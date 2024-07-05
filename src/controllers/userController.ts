@@ -7,8 +7,15 @@ class UserController {
     async register(req: Request, res: Response) {
         try {
             const { firstName, lastName, password, confirmPassword } = req.body;
+            
+            // Verificación de que la contraseña no esté vacía
+            if (!password) {
+                return res.status(400).json({ message: 'Por favor ingresa una contraseña' });
+            }
+
+            // Verificación de que las contraseñas coincidan
             if (password !== confirmPassword) {
-                return res.status(400).json({ message: 'Passwords do not match' });
+                return res.status(400).json({ message: 'Por favor confirma tu contraseña' });
             }
 
             const user = await UserService.register(firstName, lastName, password);
