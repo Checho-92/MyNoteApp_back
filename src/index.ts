@@ -1,30 +1,28 @@
-import express, { Application } from 'express';
+import express from 'express';
 import cors from 'cors';
-import userRoutes from './routes/userRoutes';
-import noteRoutes from './routes/noteRoutes'; // Asegúrate de importar las rutas de notas
-import { pool } from './database';
 import morgan from 'morgan';
+import router from './routes/Routes'; // Importamos las rutas
+import { pool } from './insfractructure/database';
 
-const app: Application = express();
+const app = express();
 
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-app.use('/api/user', userRoutes);
-app.use('/api/notes', noteRoutes); // Asegúrate de agregar las rutas de notas
+app.use('/api/user', router);
+
 const checkDatabaseConnection = async () => {
-    try {
-        await pool.query('SELECT 1');
-        console.log('¡Conexión exitosa a la base de datos!');
-    } catch (err) {
-        console.error('Error al conectar con la base de datos:', err);
-    }
-};
-
-checkDatabaseConnection();
-
-const PORT = process.env.PORT || 3000;
+      try {
+          await pool.query('SELECT 1');
+          console.log('¡Conexión exitosa a la base de datos!');
+      } catch (err) {
+          console.error('Error al conectar con la base de datos:', err);
+      }
+    };
+    checkDatabaseConnection();
+    
+    const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor Express en funcionamiento en el puerto ${PORT}`);
 });
