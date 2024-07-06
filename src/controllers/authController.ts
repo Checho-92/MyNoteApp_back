@@ -1,4 +1,4 @@
-//AuthController.ts
+// AuthController.ts
 
 import { Request, Response } from 'express';
 import AuthService from '../applications/services/AuthService';
@@ -10,7 +10,7 @@ class AuthController {
         try {
             const { nombre, password } = req.body;
             const user = await AuthService.login(nombre, password);
-            res.status(200).json({ message: 'Inicio de sesión exitoso', user });
+            res.status(200).json({ message: 'Inicio de sesión exitoso', token: user.token, user: user.user });
         } catch (error) {
             if (error instanceof Error) {
                 res.status(401).json({ message: `Error al iniciar sesión: ${error.message}` });

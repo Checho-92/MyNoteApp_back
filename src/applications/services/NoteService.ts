@@ -7,6 +7,7 @@ class NoteService {
   // Método para crear una nueva nota
   async createNote(note: Note): Promise<Note> {
     note.fecha = new Date(); // Establece la fecha de creación
+    note.estado = note.estado || 'Pendiente';
     const createdNote = await NoteRepository.addNote(note); // Llama al repositorio para guardar la nota
     return createdNote; // Retorna la nota creada
   }

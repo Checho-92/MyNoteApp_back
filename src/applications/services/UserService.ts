@@ -13,6 +13,12 @@ class UserService {
                 throw new Error('Usuario ya registrado');
             }
 
+            // Verificación de que la contraseña cumple con los requisitos de seguridad
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                throw new Error('La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una minúscula y un número.');
+            }
+
             // Hasheamos la contraseña proporcionada
             const hashedPassword = await bcrypt.hash(password, 10);
 

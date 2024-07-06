@@ -3,10 +3,24 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import jwt from 'jsonwebtoken';
 import router from './routes/Routes'; // Importamos las rutas
 import { pool } from './insfractructure/database';
 
 const app = express();
+
+// Middleware para registrar el token JWT
+app.use(morgan((tokens, req, res) => {
+  // Obtener el token del encabezado de autorización
+  const token = req.headers['authorization']?.split(' ')[1];
+  return [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    token ? `Token: ${token}` : '',
+    tokens['response-time'](req, res), 'ms'
+  ].join(' ');
+}));
 
 app.use(cors());
 app.use(morgan('dev'));
