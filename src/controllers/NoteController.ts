@@ -54,12 +54,22 @@ class NoteController {
   // Método para actualizar una nota
   async update(req: Request, res: Response) {
     try {
-      const { id_nota, nombre, contenido, estado } = req.body;
-      if (!id_nota || !nombre || !contenido || !estado) {
+      const { id } = req.params;
+      const { nombre, contenido, estado } = req.body;
+
+      if (!id || !nombre || !contenido || !estado) {
         return res.status(400).json({ message: 'ID de nota, nombre, contenido y estado son obligatorios.' });
       }
 
-      const note: Note = { id_nota, nombre, contenido, estado, id_usuario: req.body.id_usuario, fecha: req.body.fecha };
+      const note: Note = {
+        id_nota: parseInt(id),
+        nombre,
+        contenido,
+        estado,
+        id_usuario: req.body.id_usuario,
+        fecha: new Date(req.body.fecha),
+      };
+
       await NoteService.updateNote(note); // Llama al servicio para actualizar la nota
       res.status(200).json({ message: 'Nota actualizada exitosamente' }); // Retorna un mensaje de éxito
     } catch (error) {
