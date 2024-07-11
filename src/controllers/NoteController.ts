@@ -87,7 +87,7 @@ class NoteController {
         return res.status(400).json({ message: 'IDs de notas y estado son obligatorios y deben ser un array.' });
       }
 
-      await NoteService.updateNotes(noteIds, { estado });
+      await NoteService.updateMultipleNotes(noteIds, { estado });
       res.status(200).json({ message: 'Notas actualizadas exitosamente' });
     } catch (error) {
       if (error instanceof Error) {

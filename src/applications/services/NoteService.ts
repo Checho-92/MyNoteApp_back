@@ -22,8 +22,8 @@ class NoteService {
     await NoteRepository.updateNote(note); // Llama al repositorio para actualizar la nota
   }
 
-  async updateNotes(noteIds: number[], noteData: Partial<Note>): Promise<void> {
-    await NoteRepository.updateNotes(noteIds, noteData);
+  async updateMultipleNotes(noteIds: number[], noteData: Partial<Note>): Promise<void> {
+    await NoteRepository.updateMultipleNotes(noteIds, noteData);
   }
 
   // Método para eliminar una nota por su ID

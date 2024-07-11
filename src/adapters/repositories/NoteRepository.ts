@@ -26,8 +26,8 @@ class NoteRepository {
       [note.nombre, note.estado, note.contenido, note.id_nota]
     );
   }
-
-  async updateNotes(noteIds: number[], noteData: Partial<Note>): Promise<void> {
+  // Método para actualizar múltiples notas
+  async updateMultipleNotes (noteIds: number[], noteData: Partial<Note>): Promise<void> {
     const placeholders = noteIds.map(() => '?').join(',');
     const query = `UPDATE notas SET estado = ? WHERE id_nota IN (${placeholders})`;
     await pool.query(query, [noteData.estado, ...noteIds]);
