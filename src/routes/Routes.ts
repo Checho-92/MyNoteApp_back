@@ -18,5 +18,9 @@ import { authenticateToken } from '../middlewares/authMiddleware';
     router.get('/notes/user/:userId', authenticateToken, NoteController.getByUserId); // Obtener todas las notas de un usuario por su ID
     router.put('/notes/:id', authenticateToken, NoteController.update); // Actualizar una nota por su ID
     router.delete('/notes/:id', authenticateToken, NoteController.delete); // Eliminar una nota por su ID
+    router.put('/notes/multiple', authenticateToken, NoteController.updateMultiple); // Actualizar múltiples notas
+
+    
+
 
     export default router;

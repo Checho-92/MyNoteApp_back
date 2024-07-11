@@ -27,6 +27,13 @@ class NoteRepository {
     );
   }
 
+  async updateNotes(noteIds: number[], noteData: Partial<Note>): Promise<void> {
+    const placeholders = noteIds.map(() => '?').join(',');
+    const query = `UPDATE notas SET estado = ? WHERE id_nota IN (${placeholders})`;
+    await pool.query(query, [noteData.estado, ...noteIds]);
+  }
+
+
   // Método para eliminar una nota por su ID
   async deleteNoteById(id: number): Promise<void> {
     await pool.query('DELETE FROM notas WHERE id_nota = ?', [id]);

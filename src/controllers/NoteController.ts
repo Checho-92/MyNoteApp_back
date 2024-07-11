@@ -80,6 +80,23 @@ class NoteController {
       }
     }
   }
+  async updateMultiple(req: Request, res: Response) {
+    try {
+      const { noteIds, estado } = req.body;
+      if (!noteIds || !Array.isArray(noteIds) || !estado) {
+        return res.status(400).json({ message: 'IDs de notas y estado son obligatorios y deben ser un array.' });
+      }
+
+      await NoteService.updateNotes(noteIds, { estado });
+      res.status(200).json({ message: 'Notas actualizadas exitosamente' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).json({ message: `Error al actualizar las notas: ${error.message}` });
+      } else {
+        res.status(500).json({ message: 'Error desconocido al actualizar las notas' });
+      }
+    }
+  }
 
   // Método para eliminar una nota por su ID
   async delete(req: Request, res: Response) {
@@ -99,7 +116,10 @@ class NoteController {
       }
     }
   }
+
+  
 }
+
 
 // Exportamos una instancia de NoteController para ser usada en las rutas
 export default new NoteController();
