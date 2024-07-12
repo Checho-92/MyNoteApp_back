@@ -19,6 +19,8 @@ import { authenticateToken } from '../middlewares/authMiddleware';
     router.put('/notes/:id', authenticateToken, NoteController.update); // Actualizar una nota por su ID
     router.delete('/notes/:id', authenticateToken, NoteController.delete); // Eliminar una nota por su ID
     router.put('/multiple', authenticateToken, NoteController.updateMultiple); // Actualizar múltiples notas
+    router.delete('/multiple', authenticateToken, NoteController.deleteMultiple); // Eliminar múltiples notas
+
 
     
 

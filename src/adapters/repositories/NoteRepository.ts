@@ -38,6 +38,14 @@ class NoteRepository {
   async deleteNoteById(id: number): Promise<void> {
     await pool.query('DELETE FROM notas WHERE id_nota = ?', [id]);
   }
+
+   // Método para eliminar múltiples notas por sus IDs
+   async deleteMultipleNotes(noteIds: number[]): Promise<void> {
+    const placeholders = noteIds.map(() => '?').join(',');
+    const query = `DELETE FROM notas WHERE id_nota IN (${placeholders})`;
+    await pool.query(query, noteIds);
+  }
+
 }
 
 // Exportamos una instancia de NoteRepository para ser usada en otras partes de la aplicación

@@ -98,6 +98,24 @@ class NoteController {
     }
   }
 
+  async deleteMultiple(req: Request, res: Response) {
+    try {
+      const { noteIds } = req.body;
+      if (!noteIds || !Array.isArray(noteIds)) {
+        return res.status(400).json({ message: 'IDs de notas son obligatorios y deben ser un array.' });
+      }
+
+      await NoteService.deleteMultipleNotes(noteIds);
+      res.status(200).json({ message: 'Notas eliminadas exitosamente' });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).json({ message: `Error al eliminar las notas: ${error.message}` });
+      } else {
+        res.status(500).json({ message: 'Error desconocido al eliminar las notas' });
+      }
+    }
+  }
+
   // Método para eliminar una nota por su ID
   async delete(req: Request, res: Response) {
     try {

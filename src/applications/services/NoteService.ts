@@ -30,6 +30,12 @@ class NoteService {
   async deleteNoteById(id: number): Promise<void> {
     await NoteRepository.deleteNoteById(id); // Llama al repositorio para eliminar la nota
   }
+ 
+  // Método para eliminar múltiples notas por sus IDs
+  async deleteMultipleNotes(noteIds: number[]): Promise<void> {
+    await NoteRepository.deleteMultipleNotes(noteIds); // Llama al repositorio para eliminar múltiples notas
+  }
+
 }
 
 // Exportamos una instancia de NoteService para ser usada en otras partes de la aplicación
